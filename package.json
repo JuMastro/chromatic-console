@@ -1,6 +1,6 @@
 {
   "name": "chromatic-console",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Make your node devlogs rainbow",
   "main": "lib/index.js",
   "author": "JuMastro <mastromonaco.julien@gmail.com>",

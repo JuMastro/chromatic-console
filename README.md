@@ -3,6 +3,12 @@ Make your node devlogs rainbow... :)
 
 > DEVELOPMENT ONLY
 
+## Install
+
+```
+npm install -D chromatic-console 
+```
+
 ## Examples
 ```javascript
 const chromatic = require('chromatic-console')
@@ -36,6 +42,9 @@ console.error('Hello red world')
 console.log(chromatic.bright(chromatic.red('Error')))
 chromatic.error(chromatic.bright('Error'))
 console.error(chromatic.bright('Error'))
+
+// For multi arguments includes other(s) type(s) than string, use deconstruct syntax.
+console.log(...chromatic.red('str', { obj: true }, 'str'))
 ```
 
 ## Options

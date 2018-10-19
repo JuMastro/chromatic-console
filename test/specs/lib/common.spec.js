@@ -1,5 +1,3 @@
-'use strict'
-
 /* global describe it */
 /* eslint no-unused-expressions: 0 */
 
@@ -64,6 +62,7 @@ describe('Test common.js', function () {
     }
 
     const merged = common.mergeObject(reference, assignable)
+
     expect(merged).deep.equal(response)
   })
 
@@ -91,6 +90,7 @@ describe('Test common.js', function () {
     }
 
     const ordered = common.orderObject(test)
+
     expect(ordered).to.be.deep.equal(response)
   })
 
@@ -118,7 +118,7 @@ describe('Test common.js', function () {
   it('isArrayOfStrings', function () {
     expect(common.isArrayOfStrings(['a', 'b'])).to.be.true
     expect(common.isArrayOfStrings([true, 'a', 'b'])).to.be.false
-    expect(common.isArrayOfStrings(['a', true, 'b'])).to.be.false
+    expect(common.isArrayOfStrings(['a', { a: 'ok' }, 'b'])).to.be.false
     expect(common.isArrayOfStrings(['a', 'b', 42])).to.be.false
   })
 
@@ -131,5 +131,10 @@ describe('Test common.js', function () {
     expect(simpleTest[0]).to.be.equal('abc')
     expect(mixedTest[0]).to.be.equal('ab')
     expect(mixedTest[2]).to.be.equal('cd')
+  })
+
+  it('capitalize', function () {
+    expect(common.capitalize('test')).to.be.equal('Test')
+    expect(common.capitalize('test test')).to.be.equal('Test test')
   })
 })

@@ -1,5 +1,3 @@
-'use strict'
-
 /* global describe it */
 /* eslint no-unused-expressions: 0 */
 
@@ -7,9 +5,22 @@ const expect = require('chai').expect
 const formatsMap = require('../../../lib/maps/formats.json')
 const colorsMap = require('../../../lib/maps/colors.json')
 
-const defaultFormats = Object.keys(formatsMap).map((key) => key.toLowerCase()).sort()
-const defaultColors = ['black', 'blue', 'cyan', 'green', 'red', 'white', 'yellow']
-const completeColors = Object.entries(colorsMap).map((item) => item.shift().toLowerCase())
+const defaultFormats = Object.keys(formatsMap)
+  .map((key) => key.toLowerCase())
+  .sort()
+
+const completeColors = Object.entries(colorsMap)
+  .map((item) => item.shift().toLowerCase())
+
+const defaultColors = [
+  'black',
+  'blue',
+  'cyan',
+  'green',
+  'red',
+  'white',
+  'yellow'
+]
 
 const flatifyBackgroyndsKeys = function (backgrounds) {
   let flatify = []
@@ -22,7 +33,7 @@ const flatifyBackgroyndsKeys = function (backgrounds) {
 }
 
 describe('Test styles.js', function () {
-  const Styles = require('../../../lib/styles.js')
+  const Styles = require('../../../lib/restyles.js')
 
   it('Default call is valid', function () {
     const reference = [].concat(
@@ -35,9 +46,17 @@ describe('Test styles.js', function () {
   })
 
   it('Call with `flat=false` parameter is valid', function () {
-    const reference = [defaultFormats, defaultColors, defaultColors]
+    const reference = [
+      defaultFormats,
+      defaultColors,
+      defaultColors
+    ]
+
     const styles = Styles({ flat: false })
-    const stylesKeys = Object.entries(styles).map((item) => Object.keys(item.pop()))
+
+    const stylesKeys = Object.entries(styles)
+      .map((item) => Object.keys(item.pop()))
+
     expect(stylesKeys).to.be.deep.equal(reference)
   })
 
@@ -48,7 +67,9 @@ describe('Test styles.js', function () {
       flatifyBackgroyndsKeys(completeColors)
     )
 
-    expect(Object.keys(Styles({ complete: true }))).to.be.deep.equal(reference)
+    const styles = Styles({ complete: true })
+
+    expect(Object.keys(styles)).to.be.deep.equal(reference)
   })
 
   it('Call with `include=["purple"]` parameter is valid', function () {
@@ -58,9 +79,20 @@ describe('Test styles.js', function () {
   })
 
   it('Call with `flat=false, complete=true` parameters are valids', function () {
-    const reference = [defaultFormats, completeColors, completeColors]
-    const styles = Styles({ flat: false, complete: true })
-    const stylesKeys = Object.entries(styles).map((item) => Object.keys(item.pop()))
+    const reference = [
+      defaultFormats,
+      completeColors,
+      completeColors
+    ]
+
+    const styles = Styles({
+      flat: false,
+      complete: true
+    })
+
+    const stylesKeys = Object.entries(styles)
+      .map((item) => Object.keys(item.pop()))
+
     expect(stylesKeys).to.be.deep.equal(reference)
   })
 

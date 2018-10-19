@@ -1,13 +1,11 @@
-'use strict'
-
 /* global describe it */
 /* eslint no-unused-expressions: 0 */
 
 const expect = require('chai').expect
 
 describe('Test console.js', function () {
-  const styles = require('../../../lib/styles.js')()
-  const Console = require('../../../lib/console.js')
+  const styles = require('../../../lib/restyles.js')()
+  const Console = require('../../../lib/reconsole.js')
 
   const isFunction = (item) => typeof item === 'function'
 

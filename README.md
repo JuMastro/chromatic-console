@@ -138,4 +138,3 @@ Npm  >= 6.0.0
 - [mocha](https://github.com/mochajs/mocha) Simple, flexible, fun javascript test framework.
 - [chai](https://github.com/chaijs/chai) BDD / TDD assertion framework.
 - [eslint](https://github.com/eslint/eslint) Javascript linter.
-- [nodemon](https://github.com/remy/nodemon) Monitor for any changes.

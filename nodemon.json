@@ -1,7 +1,0 @@
-{
-  "verbose": true,
-  "delay": "500",
-  "ignore": [
-    "*.spec.js"
-  ]
-}

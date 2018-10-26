@@ -5,7 +5,7 @@
 <p align="center">🌈 Make your node dev logs rainbow... :)</p>
 
 <p align="center">
-  <a href="https://github.com/JuMastro/chromatic-console" alt="Npm version">
+  <a alt="Npm version" href="https://github.com/JuMastro/chromatic-console">
     <img src="https://img.shields.io/npm/v/chromatic-console.svg">
   </a>
   <a alt="Build Status" href="https://travis-ci.com/JuMastro/chromatic-console">

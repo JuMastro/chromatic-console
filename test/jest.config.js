@@ -4,7 +4,7 @@ module.exports = {
   rootDir: '../',
   collectCoverage: true,
   coverageDirectory: './coverage',
-  coverageReporters: ['json', 'html', 'text'],
+  coverageReporters: ['json', 'html', 'text', 'lcov'],
   coveragePathIgnorePatterns: ['/node_modules/'],
   coverageThreshold: {
     global: {

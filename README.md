@@ -5,8 +5,8 @@
 <p align="center">🌈 Make your node dev logs rainbow... :)</p>
 
 <p align="center">
-  <a href="https://github.com/JuMastro/chromatic-console" alt="Latest Release">
-    <img src="https://img.shields.io/github/release/JuMastro/chromatic-console.svg">
+  <a href="https://github.com/JuMastro/chromatic-console" alt="Npm version">
+    <img src="https://img.shields.io/npm/v/chromatic-console.svg">
   </a>
   <a alt="Build Status" href="https://travis-ci.com/JuMastro/chromatic-console">
     <img src="https://img.shields.io/travis/JuMastro/chromatic-console.svg">

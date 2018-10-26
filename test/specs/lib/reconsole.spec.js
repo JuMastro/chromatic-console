@@ -6,7 +6,7 @@ describe('Test console.js', () => {
 
   test('reconsole() -> is valid.', () => {
     const app = Console(undefined, defaultStyles)
-    for (let item in app) {
+    for (const item in app) {
       expect(isFunction(app[item])).toBe(true)
     }
   })

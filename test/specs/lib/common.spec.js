@@ -1,18 +1,13 @@
-/* global describe it */
-/* eslint no-unused-expressions: 0 */
-
-const expect = require('chai').expect
-
-describe('Test common.js', function () {
+describe('Test common.js', () => {
   const common = require('../../../lib/common.js')
 
-  it('isObject', function () {
-    expect(common.isObject({ hello: 'world' })).to.be.true
-    expect(common.isObject(['hello', { world: ':)' }])).to.be.false
-    expect(common.isObject('HelloWorld')).to.be.false
+  test('isObject', () => {
+    expect(common.isObject({ hello: 'world' })).toBe(true)
+    expect(common.isObject(['hello', { world: ':)' }])).toBe(false)
+    expect(common.isObject('HelloWorld')).toBe(false)
   })
 
-  it('mergeObject', function () {
+  test('mergeObject', () => {
     const reference = {
       name: 'reference',
       test: 'NotRedefined',
@@ -62,11 +57,10 @@ describe('Test common.js', function () {
     }
 
     const merged = common.mergeObject(reference, assignable)
-
-    expect(merged).deep.equal(response)
+    expect(merged).toEqual(response)
   })
 
-  it('orderObject', function () {
+  test('orderObject', () => {
     const test = {
       e: '',
       l: '',
@@ -90,11 +84,10 @@ describe('Test common.js', function () {
     }
 
     const ordered = common.orderObject(test)
-
-    expect(ordered).to.be.deep.equal(response)
+    expect(ordered).toEqual(response)
   })
 
-  it('copyObject', function () {
+  test('copyObject', () => {
     const obj = {
       name: 'example',
       deep: {
@@ -105,36 +98,35 @@ describe('Test common.js', function () {
     }
 
     const copy = common.copyObject(obj)
-
-    expect(copy).to.be.deep.equal(obj)
+    expect(copy).toEqual(obj)
 
     copy.name = 'copy'
     copy.deep.list.valid = false
-
-    expect(obj.name === 'example').to.be.true
-    expect(obj.deep.list.valid).to.be.true
+    expect(obj.name === 'example').toBe(true)
+    expect(obj.deep.list.valid).toBe(true)
   })
 
-  it('isArrayOfStrings', function () {
-    expect(common.isArrayOfStrings(['a', 'b'])).to.be.true
-    expect(common.isArrayOfStrings([true, 'a', 'b'])).to.be.false
-    expect(common.isArrayOfStrings(['a', { a: 'ok' }, 'b'])).to.be.false
-    expect(common.isArrayOfStrings(['a', 'b', 42])).to.be.false
+  test('isArrayOfStrings', () => {
+    expect(common.isArrayOfStrings(['a', 'b'])).toBe(true)
+    expect(common.isArrayOfStrings([true, 'a', 'b'])).toBe(false)
+    expect(common.isArrayOfStrings(['a', { a: 'ok' }, 'b'])).toBe(false)
+    expect(common.isArrayOfStrings(['a', 'b', 42])).toBe(false)
   })
 
-  it('groupStringsOfArray', function () {
+  test('groupStringsOfArray', () => {
     const simple = ['a', 'b', 'c']
-    const mixed = ['a', 'b', 42, 'c', 'd']
     const simpleTest = common.groupStringsOfArray(simple)
-    const mixedTest = common.groupStringsOfArray(mixed)
+    expect(simpleTest[0]).toEqual('abc')
 
-    expect(simpleTest[0]).to.be.equal('abc')
-    expect(mixedTest[0]).to.be.equal('ab')
-    expect(mixedTest[2]).to.be.equal('cd')
+    const mixed = ['a', 'b', 42, 'c', 'd']
+    const mixedTest = common.groupStringsOfArray(mixed)
+    expect(mixedTest[0]).toEqual('ab')
+    expect(mixedTest[2]).toEqual('cd')
   })
 
-  it('capitalize', function () {
-    expect(common.capitalize('test')).to.be.equal('Test')
-    expect(common.capitalize('test test')).to.be.equal('Test test')
+  test('capitalize', () => {
+    expect(common.capitalize('test')).toEqual('Test')
+    expect(common.capitalize('test test')).toEqual('Test test')
+    expect(common.capitalize()).toEqual('')
   })
 })

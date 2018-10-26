@@ -1,6 +1,6 @@
 {
   "name": "chromatic-console",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Make your node devlogs rainbow",
   "main": "lib/index.js",
   "author": "JuMastro <mastromonaco.julien@gmail.com>",
@@ -17,23 +17,21 @@
     "access": "public"
   },
   "scripts": {
-    "start": "node ./static/app.js",
     "lint": "eslint --ext .js lib --ext .js test",
     "pretest": "npm run lint",
-    "test": "mocha"
+    "test": "jest --config ./test/jest.config.js"
   },
   "engines": {
     "node": ">= 8.0.0",
     "npm": ">= 6.0.0"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
     "eslint": "^5.6.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "mocha": "^5.2.0"
+    "jest": "^23.6.0"
   }
 }

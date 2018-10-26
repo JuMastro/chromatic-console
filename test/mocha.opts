@@ -1,4 +1,0 @@
---colors
---sort
---recursive
-test/specs/{,**/}*spec.js

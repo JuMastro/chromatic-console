@@ -1,21 +1,51 @@
-# chromatic-console
-Make your node devlogs rainbow... :)
+<h1 align="center">
+  <p>chromatic-console</p>
+</h1>
 
-> DEVELOPMENT ONLY
+<p align="center">🌈 Make your node dev logs rainbow... :)</p>
 
-## Install
+<p align="center">
+  <a href="https://github.com/JuMastro/chromatic-console" alt="Latest Release">
+    <img src="https://img.shields.io/github/release/JuMastro/chromatic-console.svg">
+  </a>
+  <a alt="Build Status" href="https://travis-ci.com/JuMastro/chromatic-console">
+    <img src="https://img.shields.io/travis/JuMastro/chromatic-console.svg">
+  </a>
+  <a alt="Dev Dependencies" href="https://github.com/JuMastro/chromatic-console/blob/master/package.json">
+    <img src="https://img.shields.io/david/dev/JuMastro/chromatic-console.svg">
+  </a>
+  <a alt="Test Coverage" href="https://codeclimate.com/github/JuMastro/chromatic-console/test_coverage">
+    <img src="https://api.codeclimate.com/v1/badges/b63a61e64de2592f5512/test_coverage">
+  </a>
+  <a alt="Maintainability" href="https://codeclimate.com/github/JuMastro/chromatic-console/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/b63a61e64de2592f5512/maintainability">
+  </a>
+</p>
 
+<h5 align="center">
+  <p>DEVELOPMENT ONLY</p>
+</h5>
+
+## Getting Started
+
+Install with [`npm`](https://www.npmjs.com/):
 ```
-npm install -D chromatic-console 
+npm install -D chromatic-console
 ```
+The minimum version of Node to use chromatic-console is `v8.0.0`.
 
-## Examples
+This is what a basic use of the lib could look like, note that in the example below, the configuration present in the call is the equivalent of the default configuration.
+
 ```javascript
 const chromatic = require('chromatic-console')
 
-// Default call look like this... Chromatic().
 const chromatic = Chromatic({
   reload: false,
+  styles: {
+    flat: true,
+    complete: false,
+    include: false
+  },
   console: {
     external: true,
     seed: true,
@@ -25,11 +55,6 @@ const chromatic = Chromatic({
       warn: 'yellow',
       error: 'red'
     }
-  },
-  styles: {
-    flat: true,
-    complete: false,
-    include: false
   }
 })
 
@@ -49,92 +74,77 @@ console.log(...chromatic.red('str', { obj: true }, 'str'))
 
 ## Options
 
+Chromatic take as parameter an object that can include:
 
-`options.reload [boolean]` Option to reload the lib. All pseudo components are reloaded.
+- `reload [Boolean]` - an option to reload the components while Chromatic is called.
 
-`options.styles [object]` Styles options.
+- `styles [Object]` - the part of the configuration dedicated for styles updates.
 
-`options.console [object]` Console options.
+  - `flat [Boolean]` - when `true` it return flat stylizer object function, else functions are stored on properties `formats`, `colors` and `backgrounds`.
 
-**styles**
+  - `complete [Boolean]` - when `true` it return a complete colors list from ~256 xterm colors.
 
-`styles.flat [boolean]` Get styles functions on root of rainbow class.
+  - `include [null|Array]` - an option to load specifics colors by name in case of `complete` is not `true`.
 
-`styles.complete [boolean]` Get styles from all x-term colors.
+- `console [Object]` - the part of the configuration dedicated for console updates.
 
-`styles.include [Array|null]` Add colors by name from map.
+  - `external [Boolean]` - when `true`, output include an updated copy of console methods.
 
-**console**
+  - `seed [Boolean]` - when `true`, it rewrite the original console methods with updated methods.
 
-`console.external [boolean]` Get prints functions on lib object.
+  - `details [Object]` - list of selected styles for new logs messages (use name of color from `maps/colors.json`).
 
-`console.seed [boolean]` Seed initial console with updated methods.
+    - `log [null|String]` - when not `null` it change the colors of ouputs strings from `log` function.
 
-`console.details [object]` Details colors of updated methods.
+    - `info [null|String]` - when not `null` it change the colors of ouputs strings from `info` function.
 
-**console.details**
+    - `warn [null|String]` - when not `null` it change the colors of ouputs strings from `warn` function.
 
-`details.log [string|null]` Enable and change colors of console.log function.
-
-`details.info [string|null]` Enable and change colors of console.info function.
-
-`details.warn [string|null]` Enable and change colors of console.warn function.
-
-`details.error [string|null]` Enable and change colors of console.error function.
+    - `error [null|String]` - when not `null` it change the colors of ouputs strings from `error` function.
 
 ## API
 
 ### Formats
 
-`reset` Reset current openned styles.
+- `reset` - Reset style to default.
 
-`bright` Make bright.
+- `bright` - Make bold.
 
-`dim` Make dim.
+- `dim` - Make dim.
 
-`underline` Make underline.
+- `underline` - Make underline.
 
-`blink` Make blink. (WIP)
+- `blink` - Make blink. (WIP)
 
-`reverse` Reverse background and foreground colors.
+- `reverse` - Reverse background and foreground colors.
 
-`hidden` Make hidden.
+- `hidden` - Make hidden.
 
 ### Colors & Backgrounds
 
-All 256 standards colors are registered from colors map.
-To use it juste find her name and call it from `chromatic` module.
+A list of 256 colors (xterm) are available.
+To access it just load the `chromatic` module and know the name of the color you need.
 
 ```javascript
-chromatic['colorname']('Hello')
+chromatic.red('I am red.')
 ```
 
-If you need to apply a background color and the `flat` option is true,
-you must precede the name of the color with `bg`,
-else if flat is false just call the color from `chromatic.backgrounds` object.
+For backgrounds colors, add `bg` before the color name
 
 ```javascript
-# Flat
-chromatic['bgcolorname']('Hello')
-
-# No flat
-chromatic.backgrounds['colorname']('Hello')
+chromatic.bgblue('I have a blue background.')
 ```
 
-## Colors name
+If you have change the default parameters to choose `false` for 
+the option `styles.flat` then go first by the type of transformations you are looking for.
+
+```javascript
+chromatic.backgrounds.yellow('I have a yellow background.')
+```
 
 See all colors [here](https://github.com/JuMastro/chromatic-console/blob/master/lib/maps/colors.json).
 
-
-## Requirements
-
-```
-Node >= 8.0.0
-Npm  >= 6.0.0
-```
-
 ## Dev dependencies
 
-- [mocha](https://github.com/mochajs/mocha) Simple, flexible, fun javascript test framework.
-- [chai](https://github.com/chaijs/chai) BDD / TDD assertion framework.
-- [eslint](https://github.com/eslint/eslint) Javascript linter.
+- [Jest](https://github.com/mochajs/mocha) Delightful JavaScript Testing.
+- [Eslint](https://github.com/eslint/eslint) Javascript linter.

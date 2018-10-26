@@ -1,7 +1,7 @@
-# Env file
-.env
+# Coverage dir
+coverage/
 
-# Travis input
+# Text inputs
 *input.txt
 
 # Logs

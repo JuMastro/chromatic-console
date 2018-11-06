@@ -22,9 +22,7 @@
   </a>
 </p>
 
-<h5 align="center">
-  <p>DEVELOPMENT ONLY</p>
-</h5>
+<h5 align="center"><p>DEVELOPMENT ONLY</p></h5>
 
 ## Getting Started
 

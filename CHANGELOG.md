@@ -1,35 +1,25 @@
 # CHANGELOG
 
-## 1.0.7 - Add coverage reporter & fixes.
+## 1.0.9 - Fix dev-depencies
+
+- Fix eslint vulnerability.
+- Fix common errors from README.md / package.json.
+- Update package.json
+
+## 1.0.8 - Fix travis watched branch
+
+- Include `master` to watched branches from `.travis.yml`.
+
+## 1.0.7 - Add coverage reporter & fixes
 
 - Add coverage reporter.
 - Fixes.
 
-## 1.0.6 - Fix
-
-- Fixes.
-
 ## 1.0.5 - Global refactoring & improvements
 
-- Rewrite Class Reconsole & Restyle as object module.
-- Change test dev dependencies to use 'Jest' instead of 'Mocha+Chai'.
+- Rewrite class `Reconsole` & `Restyle` as object module.
+- Change test dev dependencies to use `Jest` instead of `Mocha` and `Chai`.
 - Improve global quality.
-
-## 1.0.4 - Fix
-
-- Fixes.
-
-## 1.0.3 - Fix
-
-- Fixes.
-
-## 1.0.2 - Global quality improvement
-
-- Improve code quality.
-
-## 1.0.1 - Fix
-
-- Fix travis-ci configuration.
 
 ## 1.0.0 - Create chromatic-console
 

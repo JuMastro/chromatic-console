@@ -15,10 +15,10 @@
     <img src="https://img.shields.io/david/dev/JuMastro/chromatic-console.svg">
   </a>
   <a alt="Test Coverage" href="https://codeclimate.com/github/JuMastro/chromatic-console/test_coverage">
-    <img src="https://api.codeclimate.com/v1/badges/b63a61e64de2592f5512/test_coverage">
+    <img src="https://api.codeclimate.com/v1/badges/37437a701dbb9584f5e4/test_coverage">
   </a>
   <a alt="Maintainability" href="https://codeclimate.com/github/JuMastro/chromatic-console/maintainability">
-    <img src="https://api.codeclimate.com/v1/badges/b63a61e64de2592f5512/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/37437a701dbb9584f5e4/maintainability">
   </a>
 </p>
 
@@ -146,5 +146,5 @@ See all colors [here](https://github.com/JuMastro/chromatic-console/blob/master/
 
 ## Dev dependencies
 
-- [Jest](https://github.com/mochajs/mocha) Delightful JavaScript Testing.
+- [Jest](https://github.com/facebook/jest) Delightful JavaScript Testing.
 - [Eslint](https://github.com/eslint/eslint) Javascript linter.

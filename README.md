@@ -146,5 +146,5 @@ See all colors [here](https://github.com/JuMastro/chromatic-console/blob/master/
 
 ## Dev dependencies
 
-- [Jest](https://github.com/mochajs/mocha) Delightful JavaScript Testing.
+- [Jest](https://github.com/facebook/jest) Delightful JavaScript Testing.
 - [Eslint](https://github.com/eslint/eslint) Javascript linter.

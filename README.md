@@ -5,14 +5,17 @@
 <p align="center">🌈 Make your node dev logs rainbow... :)</p>
 
 <p align="center">
-  <a alt="Npm version" href="https://github.com/JuMastro/chromatic-console">
-    <img src="https://img.shields.io/npm/v/chromatic-console.svg">
-  </a>
   <a alt="Build Status" href="https://travis-ci.com/JuMastro/chromatic-console">
-    <img src="https://img.shields.io/travis/JuMastro/chromatic-console.svg">
+    <img src="https://img.shields.io/travis/JuMastro/chromatic-console.svg?longCache=true">
   </a>
-  <a alt="Dev Dependencies" href="https://github.com/JuMastro/chromatic-console/blob/master/package.json">
-    <img src="https://img.shields.io/david/dev/JuMastro/chromatic-console.svg">
+  <a alt="Npm version" href="https://www.npmjs.com/package/chromatic-console?activeTab=versions">
+    <img src="https://img.shields.io/npm/v/chromatic-console.svg?longCache=true&logo=npm">
+  </a>
+  <a alt="Node requierement version" href="https://github.com/JuMastro/chromatic-console/blob/master/package.json">
+    <img src="https://img.shields.io/node/v/chromatic-console.svg?longCache=true">
+  </a>
+  <a alt="Dependencies" href="https://github.com/JuMastro/chromatic-console/blob/master/package.json">
+    <img src="https://img.shields.io/david/JuMastro/chromatic-console.svg?longCache=true">
   </a>
   <a alt="Test Coverage" href="https://codeclimate.com/github/JuMastro/chromatic-console/test_coverage">
     <img src="https://api.codeclimate.com/v1/badges/37437a701dbb9584f5e4/test_coverage">

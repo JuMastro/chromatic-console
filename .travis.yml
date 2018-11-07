@@ -1,31 +1,27 @@
 language: node_js
 node_js:
-  - "11"
-  - "10"
-  - "8"
+  - '11'
+  - '10'
+  - '8'
 branches:
   only:
+    - master
     - /\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 stages:
-  - name: tests
-  - name: npm release
+  - name: test
+  - name: npm-release
     if: tag =~ /^\d+\.\d+\.\d+$/
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 jobs:
   include:
-    - stage: tests
-      install:
-        - npm i
-      script:
-        - npm run test
-    - stage: npm release
-      node_js: "11"
-      script: echo "Deploying to npm ..."
+    - stage: npm-release
+      name: stage-deploy-npm
+      node_js: '11'
       deploy:
         provider: npm
         email: $NPM_EMAIL

@@ -1,9 +1,0 @@
-{
-  "Reset": 0,
-  "Bright": 1,
-  "Dim": 2,
-  "Underline": 4,
-  "Blink": 5,
-  "Reverse": 7,
-  "Hidden": 8
-}

@@ -5,6 +5,9 @@ module.exports = {
     'standard',
     'promise'
   ],
+  rules: {
+    'no-control-regex': 0
+  },
   env: {
     node: true,
     jest: true

@@ -235,6 +235,22 @@ describe('Constrolizer', () => {
     })
   })
 
+  test('getConsoleMethods() return valid object', () => {
+    const consolizer = new Consolizer()
+    const res = consolizer.getConsoleMethods()
+    expect(res).toHaveProperty('logObject')
+    Object.keys(consolizer.usables).forEach((key) => {
+      expect(res[key]).toBe(consolizer.usables[key])
+    })
+  })
+
+  test('logObject() not throw', () => {
+    expect(() => {
+      const consolizer = new Consolizer()
+      consolizer.logObject({ deep: { obj: { done: true } } })
+    }).not.toThrowError()
+  })
+
   test('test builded methods', () => {
     const consolizer = new Consolizer()
     expect(() => consolizer.usables.error('TEST-LOG')).not.toThrowError()

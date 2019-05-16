@@ -3,6 +3,8 @@ const Stream = require('stream')
 const Stylizer = require('./stylizer.js')
 const { isPlainObject, prepareOptions } = require('./utils.js')
 
+const DEFAULT_CONSOLE = console
+
 const DEFAULT_OPTIONS = {
   stylizer: null,
   replace: false,
@@ -196,6 +198,7 @@ module.exports = class Consolizer extends Console {
 
   /**
    * Build log method for each registered styles.
+   * @returns {object}
    */
   buildLogsMethods () {
     return Object.fromEntries(
@@ -205,9 +208,30 @@ module.exports = class Consolizer extends Console {
         ))
     )
   }
+
+  /**
+   * Log an object using Stylizer inspector.
+   * @param {object} object  - An object to log.
+   * @returns {void}
+   */
+  logObject (object) {
+    this.log(this.stylizer.stylizeObject(object))
+  }
+
+  /**
+   * Get logs methods.
+   * @returns {object}
+   */
+  getConsoleMethods () {
+    return {
+      ...this.usables,
+      logObject: this.logObject.bind(this)
+    }
+  }
 }
 
 Object.defineProperties(module.exports, {
+  DEFAULT_CONSOLE: { value: DEFAULT_CONSOLE },
   DEFAULT_OPTIONS: { value: DEFAULT_OPTIONS },
   checkOptions: { value: checkOptions },
   isValidLevelOption: { value: isValidLevelOption }

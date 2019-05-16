@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.0.0 - Rewrite lib
+
+- Delete large list of colors, recommand to user to add his owns from stylizer.
+- Now permit to provide stream for consolizer.
+- Get more flexible usages.
+- Use default console.inspect method to log object.
+- Update minimum version of Node.js to v12.0.0.
+
 ## 1.0.9 - Fix dev-depencies
 
 - Fix eslint vulnerability.

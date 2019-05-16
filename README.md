@@ -33,117 +33,157 @@ Install with [`npm`](https://www.npmjs.com/):
 ```
 npm install -D chromatic-console
 ```
-The minimum version of Node to use chromatic-console is `v8.0.0`.
+The minimum version of Node to use chromatic-console is `v12.0.0`.
 
-This is what a basic use of the lib could look like, note that in the example below, the configuration present in the call is the equivalent of the default configuration.
-
+## Examples
 ```javascript
-const chromatic = require('chromatic-console')
+const Chromatic = require('chromatic-console')
 
-const chromatic = Chromatic({
-  reload: false,
-  styles: {
-    flat: true,
-    complete: false,
-    include: false
-  },
-  console: {
-    external: true,
-    seed: true,
-    details: {
-      log: null,
-      info: 'cyan',
-      warn: 'yellow',
-      error: 'red'
-    }
+// With default options
+const chromatic = new Chromatic({
+  adds: {},
+  stylizer: null,
+  replace: false,
+  stdout: null,
+  stderr: null,
+  levels: {
+    error: ['err', 'red'],
+    warn: ['out', 'bright.yellow'],
+    info: ['out', 'bright'],
+    log: null, // stdout by default
+    debug: null
   }
 })
 
-// Say `Hello red world` with red color
-console.log(chromatic.red('Hello red world'))
-chromatic.error('Hello red World')
-console.error('Hello red world')
+// Create your own colors
+const chromatic = new Chromatic({
+  adds: { custom: [140, 70, 200] },
+  levels: {
+    custom: ['out', 'bright.custom']
+  }
+})
 
-// Say `Error` with red & bright
-console.log(chromatic.bright(chromatic.red('Error')))
-chromatic.error(chromatic.bright('Error'))
-console.error(chromatic.bright('Error'))
-
-// For multi arguments includes other(s) type(s) than string, use deconstruct syntax.
-console.log(...chromatic.red('str', { obj: true }, 'str'))
+chromatic.log('HelloWorld')
+chromatic.bright('HelloWorld')
+chromatic.custom('HelloWorld')
 ```
 
 ## Options
 
-Chromatic take as parameter an object that can include:
+#### The `Chromatic` options object is a wrap of `Stylizer` & `Consilizer` options.
 
-- `reload [Boolean]` - an option to reload the components while Chromatic is called.
+### `Stylizer` options:
 
-- `styles [Object]` - the part of the configuration dedicated for styles updates.
+Stylizer constructor argument is an object that may contains:
+  - `adds`: An object that may include new colors.
 
-  - `flat [Boolean]` - when `true` it return flat stylizer object function, else functions are stored on properties `formats`, `colors` and `backgrounds`.
+### `Consolizer` options:
 
-  - `complete [Boolean]` - when `true` it return a complete colors list from ~256 xterm colors.
-
-  - `include [null|Array]` - an option to load specifics colors by name in case of `complete` is not `true`.
-
-- `console [Object]` - the part of the configuration dedicated for console updates.
-
-  - `external [Boolean]` - when `true`, output include an updated copy of console methods.
-
-  - `seed [Boolean]` - when `true`, it rewrite the original console methods with updated methods.
-
-  - `details [Object]` - list of selected styles for new logs messages (use name of color from `maps/colors.json`).
-
-    - `log [null|String]` - when not `null` it change the colors of ouputs strings from `log` function.
-
-    - `info [null|String]` - when not `null` it change the colors of ouputs strings from `info` function.
-
-    - `warn [null|String]` - when not `null` it change the colors of ouputs strings from `warn` function.
-
-    - `error [null|String]` - when not `null` it change the colors of ouputs strings from `error` function.
+Consolizer constructor argument is an object that may contains:
+  - `stylizer`: A custom stylizer to provide (default: null).
+  - `replace`: A state to define if it's replace the global console (default: false).
+  - `stdout`: A Stream to send std outputs (default: process.stdout).
+  - `stderr`: A Stream to send err outputs (default: process.stderr).
+  - `levels`: An object that represent the provided levels to consolizer.
+    - `error`: The error def (default: ['err', red]).
+    - `warn`: The warn def (default: ['out', 'bright.yellow']).
+    - `info`: The info def (default: ['out', 'bright']).
+    - `log`: The log def (default: null).
+    - `debug`: The debug def (default: null).
 
 ## API
 
+### Chromatic
+
+Chromatic inherit builded methods from Consolizer to logs object, levels and multiple styles.
+
+### Stylizer
+
+  - `addColor(name, [rgb])` Add a color to the instance.
+  - `removeColor(name)` Remove a color from the instance.
+  - `pipe(...styles)` Create a custom style from a pipe of styles.
+  - `createInspector(opts)` Create a custom object inspector.
+  - `createSet(raw, flat)` Create set of usables from Stylizer. If `raw` options is true, the return is a string formatable style, else is a function that wrap the style.
+  - `stylize(...items)` Apply style to a list of items.
+  - `stylizeObject(obj)` Apply a inspected style to an object.
+
+### Consolizer
+
+- `buildLogsMethods()` Create a logs methods for the stylizer registered styles.
+- `logObject(obj)` Log an object with the inspector format.
+- `getConsoleMethods() Return a instance logs std methods. 
+
+## More examples
+
+```javascript
+const chromatic = new Chromatic()
+
+chromatic.yellow('I m yellow')
+
+chromatic.bgyellow('I have a yellow background')
+
+chromatic.bright('I m bright')
+
+chromatic.log('By default I m stdout')
+
+chromatic.error('By default I m red stderr')
+
+chromatic.logObject(aDeepObject)
+```
+
+Create pipe style
+```javascript
+const chromatic = new Chromatic({ adds: { custom: [0, 150, 0] } })
+const stylizer = chromatic.getStylizer() // => get chromatic._stylizer
+const styles = stylizer.styles
+const custom = stylizer.pipe([
+  styles.modifiers.bright,
+  styles.foregrounds.custom
+])
+
+chromatic.log(custom('HelloWorld'))
+```
+
+Full custom
+```javascript
+const stylizer = new Chromatic.Stylizer({
+  adds: {
+    custom1: [150, 70, 200]
+  }
+})
+
+// Other way to add color.
+stylizer.addColor('custom2', [200, 0, 100])
+
+const chromatic = new Chromatic({ stylizer })
+
+chromatic.log('HelloWorld')
+chromatic.bright('HelloWorld')
+chromatic.custom1('HelloWorld')
+chromatic.custom2('HelloWorld')
+```
+
+## Styles
+
 ### Formats
 
-- `reset` - Reset style to default.
+- bright
+- dim
+- underline
+- blink
+- hidden
 
-- `bright` - Make bold.
+### Default colors
 
-- `dim` - Make dim.
-
-- `underline` - Make underline.
-
-- `blink` - Make blink. (WIP)
-
-- `reverse` - Reverse background and foreground colors.
-
-- `hidden` - Make hidden.
-
-### Colors & Backgrounds
-
-A list of 256 colors (xterm) are available.
-To access it just load the `chromatic` module and know the name of the color you need.
-
-```javascript
-chromatic.red('I am red.')
-```
-
-For backgrounds colors, add `bg` before the color name
-
-```javascript
-chromatic.bgblue('I have a blue background.')
-```
-
-If you have change the default parameters to choose `false` for 
-the option `styles.flat` then go first by the type of transformations you are looking for.
-
-```javascript
-chromatic.backgrounds.yellow('I have a yellow background.')
-```
-
-See all colors [here](https://github.com/JuMastro/chromatic-console/blob/master/lib/maps/colors.json).
+- black
+- blue
+- cyan
+- green
+- orange
+- purple
+- red
+- white
+- yellow
 
 ## Dev dependencies
 

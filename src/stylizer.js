@@ -1,5 +1,5 @@
 const util = require('util')
-const { isPlainObject } = require('./utils.js')
+const { isPlainObject, prepareOptions } = require('./utils.js')
 
 const DEFAULT_OPTIONS = {
   flat: true,
@@ -45,15 +45,7 @@ function isRgbArray (rgb) {
  * @returns {object}
  */
 function checkOptions (options) {
-  if (!isPlainObject(options)) {
-    throw new TypeError('The "options" argument must be a plain object.')
-  }
-
-  const opts = { ...DEFAULT_OPTIONS, ...options }
-
-  if (typeof opts.flat !== 'boolean') {
-    throw new TypeError('The "options.flat" must be a boolean.')
-  }
+  const opts = prepareOptions(options, DEFAULT_OPTIONS)
 
   if (!isPlainObject(opts.adds)) {
     throw new TypeError('The "options.adds" must be a plain object.')
@@ -79,7 +71,6 @@ module.exports = class Stylizer {
   constructor (options = {}) {
     const opts = checkOptions(options)
 
-    this.flat = opts.flat
     this.adds = opts.adds
     this.styles = {
       modifiers: {},
@@ -144,7 +135,7 @@ module.exports = class Stylizer {
    * @param {object} object - The object to stylize.
    * @returns {string}
    */
-  stylizeObject (object, options = {}) {
+  stylizeObject (object) {
     return this.inspect(object)
   }
 
@@ -158,8 +149,6 @@ module.exports = class Stylizer {
       throw new TypeError('The "options" argument must be a plain object.')
     }
 
-    const inspector = { ...util.inspect }
-
     if (typeof options.depth === 'undefined') {
       options.depth = Infinity
     }
@@ -167,6 +156,8 @@ module.exports = class Stylizer {
     if (typeof options.colors === 'undefined') {
       options.colors = true
     }
+
+    const inspector = { ...util.inspect }
 
     if (isPlainObject(options.colors)) {
       Object.assign(inspector.colors, options.colors)
@@ -208,7 +199,7 @@ module.exports = class Stylizer {
    */
   removeColor (name) {
     if (!(name in this.styles.foregrounds)) {
-      throw new RangeError(`The "${name}" is not registered as colors.`)
+      return false
     }
 
     delete this.styles.foregrounds[name]
@@ -222,10 +213,23 @@ module.exports = class Stylizer {
    * @param {Array<string>} transformers - List of transformers.
    * @returns {function}
    */
-  pipe (transformers = []) {
-    if (!Array.isArray(transformers) || transformers.length < 2) {
+  pipe (transformers) {
+    this.isValidTransformers(transformers)
+
+    return this.stylize.bind(
+      null,
+      transformers.reduce((acc, next) => this.stylize(acc, next))
+    )
+  }
+
+  /**
+   * Check if list of transformers is valid.
+   * @param {Array<string>} transformers - The transformers list
+   */
+  isValidTransformers (transformers) {
+    if (!Array.isArray(transformers) || transformers.length < 1) {
       throw new Error(
-        'The "transformers" argument must be an array of more than 1 Stylizer transformer.'
+        'The "transformers" argument must be an array with atleast 1 transformer.'
       )
     }
 
@@ -238,29 +242,39 @@ module.exports = class Stylizer {
       }
     })
 
-    return this.stylize.bind(
-      null,
-      transformers.reduce((acc, next) => this.stylize(acc, next))
-    )
+    return true
   }
 
   /**
    * Create function set to stylize items.
-   * @param {boolean} flat - The flat state (default use instance flat property).
+   * @param {boolean} raw - The raw state.
+   * @param {boolean} flat - The flat state.
    * @returns {object}
    */
-  createSet (flat) {
+  createSet (raw = false, flat = true) {
+    if (typeof raw !== 'boolean') {
+      throw new TypeError('The "raw" argument must be a boolean.')
+    }
+
+    if (typeof flat !== 'boolean') {
+      throw new TypeError('The "flat" argument must be a boolean.')
+    }
+
+    const contentizer = raw
+      ? (style) => style
+      : (style) => this.stylize.bind(null, style)
+
     const set = Object.fromEntries(
-      Object.entries({ ...this.styles }).map(([type, list]) => (
+      Object.entries(this.styles).map(([type, list]) => (
         [type, Object.fromEntries(
           Object.entries(list).map(([name, style]) => (
-            [name, this.stylize.bind(null, style)]
+            [name, contentizer(style)]
           ))
         )]
       ))
     )
 
-    if (typeof flat !== 'undefined' ? flat : this.flat) {
+    if (flat) {
       return {
         ...set.modifiers,
         ...set.foregrounds,
@@ -275,9 +289,10 @@ module.exports = class Stylizer {
   }
 }
 
-Object.defineProperty(module.exports, 'checkOptions', {
-  value: checkOptions,
-  configurable: false,
-  enumerable: false,
-  writable: false
+Object.defineProperties(module.exports, {
+  HASH_COLORS: { value: HASH_COLORS },
+  HASH_MODIFIER: { value: HASH_MODIFIER },
+  DEFAULT_OPTIONS: { value: DEFAULT_OPTIONS },
+  checkOptions: { value: checkOptions },
+  isRgbArray: { value: isRgbArray }
 })

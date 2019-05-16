@@ -21,7 +21,7 @@ jobs:
   include:
     - stage: npm-release
       name: stage-deploy-npm
-      node_js: '11'
+      node_js: '12'
       deploy:
         provider: npm
         email: $NPM_EMAIL

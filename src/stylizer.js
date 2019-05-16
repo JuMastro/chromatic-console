@@ -2,7 +2,6 @@ const util = require('util')
 const { isPlainObject, prepareOptions } = require('./utils.js')
 
 const DEFAULT_OPTIONS = {
-  flat: true,
   adds: {}
 }
 

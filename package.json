@@ -39,6 +39,6 @@
     "access": "public"
   },
   "files": [
-    "lib"
+    "src"
   ]
 }

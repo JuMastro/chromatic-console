@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - '12'
-  - '12.2'
+  - '13'
 branches:
   only:
     - master
@@ -13,15 +13,15 @@ before_script:
   - ./cc-test-reporter before-build
 stages:
   - name: test
-  - name: npm-release
+  - name: npm release
     if: tag =~ /^\d+\.\d+\.\d+[a-z-]*$/
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build format-coverage -t lcov --exit-code $TRAVIS_TEST_RESULT
 jobs:
   include:
-    - stage: npm-release
-      name: stage-deploy-npm
+    - stage: npm release
       node_js: '12'
+      script: echo "Deploying to npm ..."
       deploy:
         provider: npm
         email: $NPM_EMAIL

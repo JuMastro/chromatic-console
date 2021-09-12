@@ -1,5 +1,5 @@
 module.exports = {
-  notify: true,
+  notify: false,
   verbose: true,
   rootDir: '../',
   collectCoverage: true,

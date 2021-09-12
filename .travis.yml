@@ -1,7 +1,8 @@
 language: node_js
 node_js:
+  - '16'
+  - '14'
   - '12'
-  - '13'
 branches:
   only:
     - master
@@ -20,7 +21,7 @@ after_script:
 jobs:
   include:
     - stage: npm release
-      node_js: '12'
+      node_js: '16'
       script: echo "Deploying to npm ..."
       deploy:
         provider: npm

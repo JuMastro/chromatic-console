@@ -11,8 +11,8 @@ module.exports = exports = class Chromatic {
     const stylizer = opts.stylizer || new Stylizer({ adds: opts.adds })
 
     Object.defineProperties(this, {
-      '_consolizer': { value: new Consolizer({ ...opts, stylizer }) },
-      '_styliser': { value: stylizer }
+      _consolizer: { value: new Consolizer({ ...opts, stylizer }) },
+      _styliser: { value: stylizer }
     })
 
     Object.assign(
